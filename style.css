@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.alertDiv {
+    background-color: greenyellow ;
+    color: red;
+    padding: 5px 8px;
+    border-radius: 5px;
+    width: fit-content;
+
+}
+
+button {
+    background-color: black !important ;
+    color: white !important;
+    padding: 5px 8px !important;
+    border-radius: 4px !important;
+    transition: ease 100ms all !important;
+
+}
+
+button:hover{
+    scale: 1.05  !important
+}
+button:active{
+    scale: 0.95 !important
+}

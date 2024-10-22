@@ -1,0 +1,151 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Game</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-800 text-white flex flex-col items-center justify-center min-h-screen">
+
+    <script>
+        var score = 0;
+        var continueBtn = document.createElement('button');
+        var endBtn = document.createElement('button');
+    
+        continueBtn.textContent = "Continue";
+        continueBtn.classList.add("bg-gradient-to-r", "from-red-600", "to-pink-600", "hover:from-red-700", "hover:to-pink-700", "text-white", "rounded-lg", "p-4", "w-1/2", "mb-4", "transition", "duration-300", "shadow-lg");
+    
+        endBtn.textContent = "End";
+        endBtn.classList.add("bg-pink-600", "hover:bg-pink-700", "text-white", "rounded-lg", "p-4", "w-1/2", "mb-4", "transition", "duration-300", "shadow-lg");
+    
+        document.body.appendChild(continueBtn);
+        document.body.appendChild(endBtn);
+    
+        let ind = 1;
+        const quizData = [
+            ["🏃", "🍔", "fastfood"],
+            ["🪨", "📜", "rockpaper"],
+            ["🎸", "🎤", "rockstar"],
+            ["🍕", "🍦", "fastfood"],
+            ["🐍", "📚", "pythonbook"],
+            ["🚗", "🔑", "carkey"],
+            ["🎹", "🎵", "pianomusic"],
+            ["🍌", "🍫", "bananachocolate"],
+            ["🐶", "🐱", "dogcat"],
+            ["🌞", "🌜", "daynight"]
+        ];
+    
+        var firstemoji = quizData[0][0];
+        var secondemoji = quizData[0][1];
+        var answer = quizData[0][2];
+    
+        var ravi = document.createElement("div");
+        ravi.setAttribute("id", "ravi");
+        ravi.textContent = firstemoji + " + " + secondemoji;
+        ravi.classList.add("flex", "justify-center", "text-8xl", "mb-6", "space-x-4");
+    
+        var nikhil = document.createElement("input");
+        nikhil.setAttribute("id", "nikhil");
+        nikhil.type = "text";
+        nikhil.placeholder = "Enter your answer";
+        nikhil.required = true;
+        nikhil.classList.add("border", "border-gray-600", "rounded-lg", "p-4", "text-center", "mb-4", "w-1/2", "shadow-lg", "bg-gray-700", "text-white");
+    
+        var btn = document.createElement("button");
+        btn.setAttribute("id", "submit");
+        btn.textContent = "Submit";
+        btn.classList.add("bg-blue-600", "hover:bg-blue-700", "text-white", "rounded-lg", "p-4", "w-1/2", "mb-4", "transition", "duration-300", "shadow-lg");
+    
+        var scr = document.createElement("p");
+        scr.setAttribute("id", "scr");
+        scr.classList.add("text-2xl", "font-semibold", "mb-6");
+    
+        document.body.appendChild(ravi);
+        document.body.appendChild(nikhil);
+        document.body.appendChild(btn);
+        document.body.appendChild(scr);
+    
+        let flag = 0;
+        let alertDiv;
+    
+        btn.onclick = function() {
+            const nikhil = document.getElementById("nikhil");
+            if (nikhil.value.trim() === "") {
+                if (flag === 0) {
+                    alertDiv = document.createElement("div");
+                    alertDiv.innerHTML = "<div><p>Please enter an answer</p></div>";
+                    alertDiv.classList.add("bg-red-600", "p-3", "rounded-lg", "text-red-200", "text-center", "mb-4", "shadow-lg");
+                    document.body.appendChild(alertDiv);
+                    flag = 1;
+                }
+            } else {
+                if (flag === 1) {
+                    document.body.removeChild(alertDiv);
+                    flag = 0;
+                }
+                var storedValue = nikhil.value.trim().toLowerCase().replace(/\s+/g, '');
+                nikhil.disabled = true;
+                btn.disabled = true;
+    
+                if (answer === storedValue) {
+                    score++;
+                }
+                scr.textContent = "Your score is: " + score;
+            }
+        };
+    
+        function cnl(firstemoji, secondemoji, answer) {
+            var ravi = document.getElementById("ravi");
+            ravi.textContent = firstemoji + " + " + secondemoji;
+    
+            var nikhil = document.getElementById("nikhil");
+            nikhil.disabled = false;
+            nikhil.value = "";
+            document.getElementById("scr").textContent = "";
+            document.getElementById("submit").disabled = false;
+    
+            var btn = document.getElementById("submit");
+            btn.onclick = function() {
+                var storedValue = nikhil.value.trim().toLowerCase().replace(/\s+/g, '');
+                nikhil.disabled = true;
+                btn.disabled = true;
+    
+                if (answer === storedValue) {
+                    score++;
+                }
+                scr.textContent = "Your score is: " + score;
+            };
+        }
+    
+        continueBtn.onclick = function () {
+            if (ind == quizData.length) {
+                alert("Quiz Complete!");
+                endBtn.click();
+            } else {
+                var nextQuiz = quizData[ind];
+                cnl(nextQuiz[0], nextQuiz[1], nextQuiz[2]);
+                ind++;
+            }
+        };
+    
+        endBtn.onclick = function () {
+            const scoreCard = document.createElement("div");
+            scoreCard.innerHTML = "<h1 class='text-3xl'>Game has ended</h1><p class='text-xl'>Your score is " + score + "</p>";
+            scoreCard.classList.add("text-center", "mt-6");
+    
+            const restartBtn = document.createElement("button");
+            restartBtn.textContent = "Restart game";
+            restartBtn.classList.add("bg-blue-600", "hover:bg-blue-700", "text-white", "rounded-lg", "p-4", "mt-4", "transition", "duration-300", "shadow-lg");
+    
+            document.body.appendChild(scoreCard);
+            document.body.appendChild(restartBtn);
+    
+            restartBtn.onclick = function() {
+                window.location.reload();
+            };
+        };
+    </script>
+    
+</body>
+</html>
